@@ -77,39 +77,7 @@ fi
 export PATH=$PATH:$HOME/Documents/scripts
 
 # ssh-agent configuration
-<<<<<<< HEAD
-eval $(ssh-agent -s) > /dev/null
-=======
-if [ -z "$(pgrep ssh-agent)" ]; then
-    if [ -z /tmp/ssh-* ]; then
-      rm -rf /tmp/ssh-*
-    fi
-    eval $(ssh-agent -s) > /dev/null
-else
-    export SSH_AGENT_PID=$(pgrep ssh-agent)
-    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name "agent.*")
-fi
->>>>>>> 8873751732774373b39f520d80d653ce93525d61
 
 #add my privagte key to ssh-agent
 ssh-add $HOME/.ssh/alan_beacon_main
 #ssh-add $HOME/.ssh/alan_beacon_main_gitolite
-
-
-
-#if [ ! -z "$(pgrep ssh-agent)" ]; then
-#    echo "pgrep not empty, removing /tmo/ssh-* files"
-#    rm -rf /tmp/ssh-*
-#    echo "evaling ssh-agent -s"
-#    eval $(ssh-agent -s) > /dev/null
-#else
-#    echo "exporting pid and sock"
-#    export SSH_AGENT_PID=$(pgrep ssh-agent)
-#    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name "agent.*")
-#fi
-#
-#if [ "$(ssh-add -l)" == "The agent has no identities." ]; then
-#    echo "running ssh-add"
-#    #ssh-add $HOME/.ssh/id_rsa
-#    ssh-add
-#fi
