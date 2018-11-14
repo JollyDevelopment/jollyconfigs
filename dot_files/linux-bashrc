@@ -65,19 +65,26 @@ fi
 # This customizes the bash prompt
 export PS1=" \[\e[32;40m\]\u\[\e[m\]@\[\e[32m\]\h\[\e[m\] \[\e[36m\]\W\[\e[m\] \\$  "
 
+# Start Keybase and sleep to 5 seconds
+#/usr/bin/run_keybase && sleep 1
 
-#this starts ssh-agent and adds the alan_beacon_main private key------------------------------
 
 # wsfl bash is not a login shell
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# add the Document/scripts dir to the PATH
-export PATH=$PATH:$HOME/Documents/scripts
+# add the Document/scripts and the Programs dirs to the PATH
+export PATH=$PATH:$HOME/Documents/scripts:$HOME/Programs
 
-# ssh-agent configuration
+# this starts ssh-agent and adds the alan_beacon_main private key------------------------------
+# ssh-agent eval to get it into the env
+eval $(ssh-agent -s)
 
 #add my privagte key to ssh-agent
 ssh-add $HOME/.ssh/alan_beacon_main
 #ssh-add $HOME/.ssh/alan_beacon_main_gitolite
+
+# include per machine aliases
+. $HOME/.aliases
+
