@@ -78,12 +78,19 @@ fi
 export PATH=$PATH:$HOME/Documents/scripts:$HOME/Programs
 
 # this starts ssh-agent and adds the alan_beacon_main private key------------------------------
-# ssh-agent eval to get it into the env
-eval $(ssh-agent -s)
+# test to see if there is already an agent running,
+# if not, then start one with ssh-agent eval
+if ! [ "$SSH_AUTH_SOCK" ] ; then
+    eval $(ssh-agent -s)
+fi
 
-#add my privagte key to ssh-agent
-ssh-add $HOME/.ssh/alan_beacon_main
-#ssh-add $HOME/.ssh/alan_beacon_main_gitolite
+#add my private key to ssh-agent
+# test to see if its already added, if not, add it
+ssh-add -l | grep alan_beacon_main > /dev/null
+if [ $? -ne 0 ] ; then
+    ssh-add $HOME/.ssh/alan_beacon_main
+    #ssh-add $HOME/.ssh/alan_beacon_main_gitolite
+fi
 
 # include per machine aliases
 . $HOME/.aliases
