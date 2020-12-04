@@ -65,19 +65,33 @@ fi
 # This customizes the bash prompt
 export PS1=" \[\e[32;40m\]\u\[\e[m\]@\[\e[32m\]\h\[\e[m\] \[\e[36m\]\W\[\e[m\] \\$  "
 
+# Start Keybase and sleep to 5 seconds
+#/usr/bin/run_keybase && sleep 1
 
-#this starts ssh-agent and adds the alan_beacon_main private key------------------------------
 
 # wsfl bash is not a login shell
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
-# add the Document/scripts dir to the PATH
-export PATH=$PATH:$HOME/Documents/scripts
+# add the Document/scripts and the Programs dirs to the PATH
+export PATH=$PATH:$HOME/Documents/scripts:$HOME/Programs
 
-# ssh-agent configuration
+# this starts ssh-agent and adds the alan_beacon_main private key------------------------------
+# test to see if there is already an agent running,
+# if not, then start one with ssh-agent eval
+if ! [ "$SSH_AUTH_SOCK" ] ; then
+    eval $(ssh-agent -s)
+fi
 
-#add my privagte key to ssh-agent
-ssh-add $HOME/.ssh/alan_beacon_main
-#ssh-add $HOME/.ssh/alan_beacon_main_gitolite
+#add my private key to ssh-agent
+# test to see if its already added, if not, add it
+ssh-add -l | grep alan_beacon_main > /dev/null
+if [ $? -ne 0 ] ; then
+    ssh-add $HOME/.ssh/alan_beacon_main
+    #ssh-add $HOME/.ssh/alan_beacon_main_gitolite
+fi
+
+# include per machine aliases
+. $HOME/.aliases
+
