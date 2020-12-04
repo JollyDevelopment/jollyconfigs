@@ -1,0 +1,18 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = Alan Roberts
+	email = alan.roberts@beacon.io
+[core]
+	autocrlf = input
+	safecrlf = warn
+
+[alias]
+  hist = log --pretty=format:\"%Cred %h %C(cyan) %ad %Creset | %s%d %Cgreen [%an]\" --graph --date=short --decorate
+  a = add
+  co = checkout
+  c = commit
+  s = status
+  b = branch
+  type = cat-file -t
+  dump = cat-file -p
